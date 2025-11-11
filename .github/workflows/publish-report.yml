@@ -5,6 +5,7 @@ on:
     workflows: ["Playwright Tests"]
     types:
       - completed
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -15,15 +16,16 @@ jobs:
       - name: Download report artifact
         uses: actions/download-artifact@v4
         with:
-          name: playwright-report.zip       
-          path: ./artifacts                 
+          name: playwright-report.zip
+          path: ./artifacts
 
       - name: Unzip report
-        run: unzip ./artifacts/playwright-report.zip -d playwright-report 
+        run: unzip ./artifacts/playwright-report.zip -d playwright-report
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: playwright-report    
+          publish_dir: playwright-report
+
 
